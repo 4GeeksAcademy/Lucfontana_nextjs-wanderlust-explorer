@@ -4,13 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import { experiences } from "@/data/experiences";
+import { experiences, getSafeExperienceImageUrl } from "@/data/experiences";
 import { useFavorites } from "@/context/FavoritesContext";
 
 export default function ExperienceDetailPage() {
   const params = useParams<{ id: string }>();
   const experience = experiences.find((item) => item.id === params.id);
   const { isFavorite, toggleFavorite } = useFavorites();
+  const imageUrl = experience
+    ? getSafeExperienceImageUrl(experience.imageUrl)
+    : undefined;
 
   useEffect(() => {
     if (!experience) {
@@ -45,7 +48,7 @@ export default function ExperienceDetailPage() {
     "@type": "Product",
     name: experience.title,
     description: experience.description,
-    image: experience.imageUrl,
+    image: imageUrl,
     category: experience.category,
     brand: {
       "@type": "Brand",
@@ -74,8 +77,8 @@ export default function ExperienceDetailPage() {
       <section className="grid gap-8 rounded-3xl border border-black/10 bg-white p-4 shadow-sm md:grid-cols-2 md:p-6">
         <div className="relative h-80 w-full md:h-full">
           <Image
-          src={experience.imageUrl}
-          alt={experience.title}
+            src={imageUrl!}
+            alt={experience.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="rounded-2xl object-cover"

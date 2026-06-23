@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Experience } from "@/data/experiences";
+import { getSafeExperienceImageUrl, type Experience } from "@/data/experiences";
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -13,11 +13,13 @@ export function ExperienceCard({
   isFavorite,
   onToggleFavorite,
 }: ExperienceCardProps) {
+  const imageUrl = getSafeExperienceImageUrl(experience.imageUrl);
+
   return (
     <article className="overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
       <div className="relative h-48 w-full overflow-hidden">
         <Image
-          src={experience.imageUrl}
+          src={imageUrl}
           alt={experience.title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"

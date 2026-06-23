@@ -16,6 +16,21 @@ export interface Experience {
   imageUrl: string;
 }
 
+const brokenExperienceImageUrls = new Set([
+  "https://images.unsplash.com/photo-1526779259212-756e28ec6f4f?auto=format&fit=crop&w=1200&q=80",
+]);
+
+const fallbackExperienceImageUrl =
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80";
+
+export function getSafeExperienceImageUrl(imageUrl: string) {
+  if (!imageUrl || brokenExperienceImageUrls.has(imageUrl)) {
+    return fallbackExperienceImageUrl;
+  }
+
+  return imageUrl;
+}
+
 const categories: ExperienceCategory[] = [
   "Adventure",
   "Culture",
@@ -103,7 +118,9 @@ export const experiences: Experience[] = Array.from({ length: 100 }, (_, index) 
   const destination = destinationSeeds[index % destinationSeeds.length];
   const category = categories[index % categories.length];
   const description = descriptionSeeds[index % descriptionSeeds.length];
-  const imageUrl = imageSeeds[index % imageSeeds.length];
+  const imageUrl = getSafeExperienceImageUrl(
+    imageSeeds[index % imageSeeds.length],
+  );
 
   return {
     id: `exp-${String(index + 1).padStart(3, "0")}`,

@@ -18,7 +18,7 @@ export default function ProfilePage() {
         <dl className="mt-8 grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-black/10 bg-orange-50 p-4">
             <dt className="text-sm font-semibold text-black/70">Nombre</dt>
-            <dd className="mt-1 text-xl font-bold text-black">Lucia Fontana</dd>
+            <dd className="mt-1 text-xl font-bold text-black">Luca Fontana</dd>
           </div>
           <div className="rounded-2xl border border-black/10 bg-orange-50 p-4">
             <dt className="text-sm font-semibold text-black/70">Plan actual</dt>
